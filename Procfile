@@ -1,1 +1,1 @@
-web: gunicorn nhs.wsgi --log-file -
+web: gunicorn NHS.wsgi
