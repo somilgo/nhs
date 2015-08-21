@@ -1,0 +1,51 @@
+table
+{
+	width: 100%;
+	height: 99%;
+	border-collapse: collapse;
+	z-index: -1;
+}
+
+th.mon, th.tues, th.wed, th.thurs, th.fri, th.sat, th.sun
+{
+   height:5%;
+   border: 1px solid black;
+}
+
+th.month
+{
+	
+	height: 15%;
+
+}
+
+td {
+   border: 1px solid black;
+   text-align: left;
+   vertical-align: top;
+   padding: .5%;
+   width: 14%;
+   height: 14%;
+}
+
+th.month
+{
+	font-size: 7vh;
+}
+
+#back
+{
+	position:absolute;
+	z-index: 100;
+	top:7.7%;
+	left:5%;
+}
+
+#forward
+{
+	position:absolute;
+	z-index: 100;
+	top:7.7%;
+	text-align: right;
+	right:5%;
+}

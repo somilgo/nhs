@@ -1,0 +1,6 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'events/calendarStyle.css' %}" />
+{{calendar}}
+<a id='back' href={{prev}}>Previous Month</a>
+<a id='forward' href = {{next}}>Next Month</a>

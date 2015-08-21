@@ -1,0 +1,18 @@
+<h1>{{ object.name }}</h1>
+<p>Date: {{ object.date }}</p>
+<p>Start Time: {{ object.start_time }}</p>
+<p>End Time: {{ object.end_time }}</p>
+<p>Location: {{ object.location }}</p>
+<p>Total Hours: {{ object.total_hours }}</p>
+<p>Total Points (Only for second year members): {{ object.total_points}}</p>
+<p>{{object.num_students}} out of {{ object.max_students}} signed up</p>
+<p>Description: {{ object.event_description}}</p>
+<br>
+{% if full %}
+<p>EVENT IS FULL</p>
+{%endif%}
+{%if signed_up%}
+<a href="/{{object.pk}}/event_unsign_up/">Un-Sign-Up</a>
+{%elif full != True%}
+<a href="/{{object.pk}}/event_sign_up/">Sign Up!</a>
+{%endif%}
