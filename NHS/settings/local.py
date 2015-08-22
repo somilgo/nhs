@@ -82,17 +82,22 @@ WSGI_APPLICATION = 'NHS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nhs',
-        'USER': 'nhsadmin',
-        'PASSWORD': '#cbwestnhs',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'nhs',
+#         'USER': 'nhsadmin',
+#         'PASSWORD': '#cbwestnhs',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
+
+
+# Parse database configuration from $DATABASE_URL
+
+DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
