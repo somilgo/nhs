@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import dj_database_url
+from django.conf import settings
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -92,7 +93,7 @@ WSGI_APPLICATION = 'NHS.wsgi.application'
 #         'PORT': '',
 #     }
 # }
-
+DATABASES = settings.DATABASES
 DATABASES['default'] =  dj_database_url.config()
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

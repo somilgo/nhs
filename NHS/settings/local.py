@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'NHS.wsgi.application'
 #         'PORT': '',
 #     }
 # }
-
+DATABASES = settings.DATABASES
 DATABASES['default'] =  dj_database_url.config()
 
 # Internationalization
