@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=6b_2=!3s2hq3-nc@#rx6v=##u53xt!b=(#)c(2nk%&4qfpvy)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -83,17 +83,17 @@ WSGI_APPLICATION = 'NHS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'nhs',
-#         'USER': 'nhsadmin',
-#         'PASSWORD': '#cbwestnhs',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-DATABASES = settings.DATABASES
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nhs',
+        'USER': 'nhsadmin',
+        'PASSWORD': '#cbwestnhs',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+# DATABASES = settings.DATABASES
 DATABASES['default'] =  dj_database_url.config()
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
