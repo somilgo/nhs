@@ -33,6 +33,10 @@
 <form id = 'login' action="/{{year}}/{{month}}/my_events">
 <input type="submit"  id="log" class="btn btn-info btn-lg" value='My Events'>
 </form>
+</form>
+<form id = 'login' action="/profile/">
+<input type="submit"  id="log" class="btn btn-info btn-lg" value='My Profile'>
+</form>
 {%if student.is_officer%}
 <form id = 'login' action="/event_creator/">
 <input type="submit"  id="ec" class="btn btn-info btn-lg" value='Create Event'>

@@ -1,0 +1,26 @@
+<h1>{{ student.firstname }} {{student.lastname}}</h1>
+<p>Email: {{ student.email }}</p>
+
+{%if second%}
+<p>Total Points: {{ student.points}}</p>
+{%else%}
+<p>Total Hours: {{ student.hours }}</p>
+{%endif%}
+<p>Completed Events<br>
+{%for e in events%}
+{%if e.event_completed%}
+<a href = '{{e.get_absolute_url}}'>{{e.name}}</a>
+<br>
+{%endif%}
+{%endfor%}
+</p>
+
+<p>Upcoming Events<br>
+{%for e in events%}
+{%if not e.event_completed%}
+<a href = '{{e.get_absolute_url}}'>{{e.name}}</a>
+<br>
+{%endif%}
+{%endfor%}
+<br><br>
+<a href = '/'>HOME</a>

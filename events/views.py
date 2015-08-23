@@ -49,7 +49,6 @@ def log_in(request):
 		password = form.cleaned_data['password']
 		user = authenticate(email=email, password=password)
 		if user is not None:
-			login(request, user)
 			request.session['user'] = email
 			try:
 				return HttpResponseRedirect(request.session['post_log'])
@@ -233,3 +232,19 @@ def delete_event(request, pk):
 		return HttpResponse("You need to be an officer")
 	Event.objects.get(pk=pk).delete()
 	return HttpResponseRedirect('/')
+def profile(request):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	events = Event.objects.order_by('date').filter(current_students=student)
+	return render(request, 'events/profile.html', {'student': student, 
+		'second':student.is_second_year, 'events':events})
+
+def update():
+	events = Event.objects.all()
+	students = Student.objects.all()
+	for e in events:
+		e.save()
+	for s in students:
+		s.save()

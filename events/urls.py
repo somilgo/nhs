@@ -19,4 +19,5 @@ urlpatterns = [
 	url(r'^(?P<pk>[0-9]+)/students/$', views.cur_stud, name='cur_stud'),
 	url(r'^log_out/$', views.log_out, name='log_out'),
 	url(r'^(?P<year>[0-9]+)/(?P<month>[0-9]+)/my_events/$', views.my_events, name='my_events'),
+	url(r'^profile/$', views.profile, name='profile'),
 ]

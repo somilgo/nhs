@@ -58,6 +58,17 @@ class Student(AbstractBaseUser):
 
 	def __unicode__(self):
 		return self.firstname + " " + self.lastname
+	def save(self):
+		events = Event.objects.order_by('date').filter(current_students=self)
+		hourz = 0
+		pointz = 0
+		for i in events:
+			if i.event_completed:
+				hourz+=i.total_hours
+				pointz+=i.total_points
+		self.hours = hourz
+		self.points = pointz
+		super(Student, self).save()
 
 class Event(models.Model):
 	current_students = models.ManyToManyField(Student, blank=True)

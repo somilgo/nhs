@@ -18,10 +18,13 @@
 {% if full %}
 <p>EVENT IS FULL</p>
 {%endif%}
+{%if object.event_completed%}
+{%else%}
 {%if signed_up%}
 <a href="/{{object.pk}}/event_unsign_up/">Un-Sign-Up</a>
 {%elif full != True%}
 <a href="/{{object.pk}}/event_sign_up/">Sign Up!</a>
+{%endif%}
 {%endif%}
 <br>
 <a href="/{{object.pk}}/students/">Who's signed up?</a>

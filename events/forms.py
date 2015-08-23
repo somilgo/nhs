@@ -72,9 +72,11 @@ class EventForm(forms.ModelForm):
 		return self.cleaned_data
 	def save(self, commit=True):
 		event = super(EventForm, self).save(commit=False)
-		event.current_students = self.cleaned_data['current_students']
+		
 		if commit:
 			event.save()
+		event.current_students = self.cleaned_data['current_students']
+		event.save()
 		return event
 
 
