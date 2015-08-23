@@ -66,10 +66,13 @@ class EventForm(forms.ModelForm):
 		students = self.cleaned_data['current_students']
 		self.cleaned_data['num_students'] = len(students)
 		self.cleaned_data['event_completed'] = False
+		if len(students) > self.cleaned_data['max_students']:
+			raise forms.ValidationError("There are more than the maximum number of students registered. Please increase the maximum or remove some students")
 
 		return self.cleaned_data
 	def save(self, commit=True):
 		event = super(EventForm, self).save(commit=False)
+		event.current_students = self.cleaned_data['current_students']
 		if commit:
 			event.save()
 		return event

@@ -1,3 +1,5 @@
+<html>
+<body>
 <h1>{{ object.name }}</h1>
 <p>Date: {{ object.date }}</p>
 <p>Start Time: {{ object.start_time }}</p>
@@ -7,6 +9,11 @@
 <p>Total Points (Only for second year members): {{ object.total_points}}</p>
 <p>{{object.num_students}} out of {{ object.max_students}} signed up</p>
 <p>Description: {{ object.event_description}}</p>
+
+{% if officer %}
+<a href="/{{object.pk}}/edit/">Edit</a><br>
+<a href = '#' onclick="delFunc()">Delete</a>
+{%endif%}
 <br>
 {% if full %}
 <p>EVENT IS FULL</p>
@@ -16,3 +23,22 @@
 {%elif full != True%}
 <a href="/{{object.pk}}/event_sign_up/">Sign Up!</a>
 {%endif%}
+<br>
+<a href="/{{object.pk}}/students/">Who's signed up?</a>
+<br><br>
+{%if my%}
+<a href='/{{year}}/{{month}}/my_events/'>Back</a>
+{%else%}
+<a href='/{{year}}/{{month}}/'>Back</a>
+{%endif%}
+
+<script>
+function delFunc() {
+    if (confirm("Are you sure you want to delete this event?") == true) 
+    {   
+    	window.location.href = "/{{object.pk}}/delete/";
+	}
+}
+</script>
+</body>
+</html>

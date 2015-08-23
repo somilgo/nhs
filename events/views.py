@@ -10,13 +10,24 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from .eventCalendar import EventCalendar
+import datetime
 
 # Create your views here.
 
 def home(request):
-	return HttpResponse("This is the home page!")
+	request.session['post_log'] = '/'
+	try:
+		student = Student.objects.get(email=request.session['user'])
+		logged = True
+	except:
+		logged = False
+		student = None
+	return render(request, 'events/home.html', {'year': datetime.datetime.now().year,
+	 'month': datetime.datetime.now().month, 'student': student, 'logged':logged})
+
 
 def sign_up(request):
+	request.session['user'] = None
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
@@ -28,7 +39,7 @@ def sign_up(request):
 	return render(request, 'events/sign_up.html', {'form': form})
 
 def sign_up_success(request):
-	return HttpResponse("Thanks for signing up!")
+	return HttpResponseRedirect('/log_in/')
 
 def log_in(request):
 	form = LogIn(request.POST or None)
@@ -40,7 +51,10 @@ def log_in(request):
 		if user is not None:
 			login(request, user)
 			request.session['user'] = email
-			return HttpResponseRedirect(reverse('events:log_in_success'))
+			try:
+				return HttpResponseRedirect(request.session['post_log'])
+			except:
+				return HttpResponseRedirect('/')
 		else:
 			messages.warning(request, "Username or password is incorrect.")
 	return render(request, 'events/log_in.html', {'form':form})
@@ -49,11 +63,17 @@ def log_in_success(request):
 	return HttpResponse("{} has logged in!".format(request.session['user']))
 
 def event_creator(request):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to see this page")
 	if request.method == 'POST':
 		form = EventForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/event_success/')
+			return HttpResponseRedirect('/')
 	else:
 		form = EventForm()
 
@@ -67,16 +87,20 @@ class EventDetailView(DetailView):
 
 def event_details(request, pk):
 	event = Event.objects.get(pk=pk)
-	student = Student.objects.get(email=request.session['user'])
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
 	signed_up = False
 	full = True
-	print "money"
 	if student in event.current_students.all():
 		signed_up = True
-		print "money"
 	if event.num_students < event.max_students:
 		full = False
-	return render_to_response('events/event_detail.html', {'object':event, 'full':full, 'signed_up':signed_up})
+	month = event.date.month
+	year = event.date.year
+	return render_to_response('events/event_detail.html', {'object':event, 'full':full, 
+		'signed_up':signed_up, 'month':month, 'year':year, 'my':request.session['myev'], 'officer':student.is_officer})
 
 def calendar(request, year, month):
 	myYear = int(year)
@@ -99,6 +123,7 @@ def calendar(request, year, month):
 		prevYear = myYear
 		prevMonth = myMonth-1
 	prevUrl = '/{0}/{1}/'.format(prevYear, prevMonth)
+	request.session['myev'] = False
 	return render_to_response('events/calendar.html', {'calendar':mark_safe(cal), 'next':nextUrl, 'prev':prevUrl})
 
 def event_sign_up(request, event_pk):
@@ -128,3 +153,83 @@ def un_sign(request, pk):
 		return HttpResponse("You've unsigned up")
 	else:
 		return HttpResponse("You haven't signed up!")
+
+def cur_stud(request,pk):
+	request.session['post_log'] = '/'
+	event = Event.objects.get(pk=pk)
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		request.session['post_log'] = '/{}/students'.format(pk)
+		return HttpResponseRedirect('/log_in/')
+	students = event.current_students.all()
+	names = []
+	emails = {}
+	officer = student.is_officer
+	for s in students:
+		names.append(s.__unicode__())
+		emails[s.__unicode__()]=s.email
+	back = '/{}/'.format(pk)
+	return render_to_response('events/cur_stud.html', {'namesx':names, 'emailsx':emails, 'officer':officer, 'back':back})
+
+def log_out(request):
+	request.session['user'] = None
+	return HttpResponseRedirect('/')
+
+def my_events(request, year, month):
+	myYear = int(year)
+	myMonth = int(month)
+	request.session['post_log'] = '/'
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		request.session['post_log'] = '/{0}/{1}/my_events/'.format(myYear, myMonth)
+		return HttpResponseRedirect('/log_in/')
+	events = Event.objects.order_by('date').filter(
+		date__year=myYear, date__month=myMonth, current_students=student)
+	cal = EventCalendar(events).formatmonth(myYear,myMonth)
+	if myMonth == 12:
+		nextMonth = 1
+		nextYear = myYear+1
+	else:
+		nextYear = myYear
+		nextMonth = myMonth+1
+	nextUrl = '/{0}/{1}/my_events'.format(nextYear, nextMonth)
+
+	if myMonth == 1:
+		prevMonth = 12
+		prevYear = myYear-1
+	else:
+		prevYear = myYear
+		prevMonth = myMonth-1
+	prevUrl = '/{0}/{1}/my_events'.format(prevYear, prevMonth)
+	request.session['myev'] = True
+	return render_to_response('events/calendar.html', {'calendar':mark_safe(cal), 'next':nextUrl, 'prev':prevUrl})
+
+def edit_event(request,pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to see this page")
+	event = Event.objects.get(pk=pk)
+	if request.method == 'POST':
+		form = EventForm(request.POST, instance=event)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/{}/'.format(pk))
+	else:
+		form = EventForm(instance=event)
+
+	return render(request, 'events/edit.html', {'form': form, 'pk':pk})
+
+def delete_event(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer")
+	Event.objects.get(pk=pk).delete()
+	return HttpResponseRedirect('/')

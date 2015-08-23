@@ -1,0 +1,7 @@
+<h1>Edit Event</h1>
+
+<form action='/{{pk}}/edit/' method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Edit" />
+</form>

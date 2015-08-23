@@ -1,6 +1,6 @@
 table
 {
-	width: 100%;
+	width: 99.99%;
 	height: 99%;
 	border-collapse: collapse;
 	z-index: -1;
@@ -48,4 +48,18 @@ th.month
 	top:7.7%;
 	text-align: right;
 	right:5%;
+}
+
+#space
+{
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.homebutton
+{
+	width:30px;
+	height: 30px;
+
 }

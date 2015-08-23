@@ -1,6 +1,16 @@
 {% load staticfiles %}
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
 
+<!-- Optional theme -->
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:800,700,400,600' rel='stylesheet' type='text/css'>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'events/calendarStyle.css' %}" />
 {{calendar}}
 <a id='back' href={{prev}}>Previous Month</a>
 <a id='forward' href = {{next}}>Next Month</a>
+<div id='space'>
+<button onclick="window.location='/';" type="button" class="homebutton">
+  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+</button>
+</div>
