@@ -1,9 +1,18 @@
-<h1>Log In</h1>
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id = 'wrapper'><div id = 'shiftlog'>
 
+<h1>Log In</h1>
+<br>
 <form action="/log_in/" method="post">
     {% csrf_token %}
     {{ form.as_p}}
     <input type="submit" value="Log In" />
-</form>
+</form><br><br>
 
-<a href='/sign_up/'>Need an Account?</a>
+<a href='/sign_up/' id = 'signup'>Need an Account?</a>
+
+</div></div>
+{%endblock%}

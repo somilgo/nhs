@@ -1,0 +1,102 @@
+body { 
+  background: url(backdark.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+table
+{
+	width: 99.99%;
+	height: 99.9%;
+	border-collapse: collapse;
+	z-index: -1;
+	overflow: hidden;
+	color:white;
+	background: rgba(0,0,0,0.5);
+}
+
+
+th.mon, th.tues, th.wed, th.thurs, th.fri, th.sat, th.sun
+{
+   height:30px;
+   border: 1px solid white;
+}
+
+th.month
+{
+	
+	height: 100px;
+
+}
+
+td {
+   border: 1px solid white;
+   text-align: left;
+   vertical-align: top;
+   padding: .5%;
+   width: 14%;
+   height: 14%;
+
+   word-break: break-all;
+}
+
+th.month
+{
+	font-size: 7vh;
+}
+
+#back
+{
+	position:absolute;
+	z-index: 100;
+	top:2%;
+	left:14%;
+	color: white;
+}
+
+#forward
+{
+	position:absolute;
+	z-index: 100;
+	top:2%;
+	text-align: right;
+	right:14%;
+	color:white;
+}
+
+.backbutton
+{
+	width: 0px;
+	height: 0px;
+	font-size: 5em;
+}
+
+#space
+{
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.homebutton
+{
+	width:0;
+	height: 0;
+	font-size: 4em;
+
+}
+
+#homeid
+{
+	position:absolute;
+	z-index: 100;
+	top:3%;
+	text-align: right;
+	left:2%;
+	color:white;
+}
+
+
+

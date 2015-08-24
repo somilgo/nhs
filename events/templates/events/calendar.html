@@ -5,12 +5,16 @@
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,700,400,600' rel='stylesheet' type='text/css'>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'events/calendarStyle.css' %}" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'events/calStyle.css' %}" />
 {{calendar}}
-<a id='back' href={{prev}}>Previous Month</a>
-<a id='forward' href = {{next}}>Next Month</a>
-<div id='space'>
-<button onclick="window.location='/';" type="button" class="homebutton">
-  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-</button>
-</div>
+<a href = '{{prev}}' class="backbutton">
+<span class="glyphicon glyphicon-arrow-left" id='back' href={{prev}}></span>
+</a>
+<a href = '{{next}}' class="backbutton">
+<span class="glyphicon glyphicon-arrow-right" id='forward' href={{prev}}></span>
+</a>
+
+<a href='/' class="homebutton">
+  <span class="glyphicon glyphicon-home" id="homeid"></span>
+</a>

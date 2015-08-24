@@ -1,32 +1,11 @@
 
-{% load staticfiles %}
-
-<html>
-<head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,700,400,600' rel='stylesheet' type='text/css'>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="http://mynameismatthieu.com/WOW/css/libs/animate.css">
-<script src="http://mynameismatthieu.com/WOW/dist/wow.min.js"></script>
-<script>
- new WOW().init();
-</script>
 
-<link rel="stylesheet" type="text/css" href="{% static 'events/homeStyle.css' %}" />
-</head>
-<div id = "title" class = 'animated bounceInLeft'>
-	Central Bucks West <br> National Honor Society
-</div>
-<div id="space" style="text-align:center;">
-<form action="/{{year}}/{{month}}">
-<input type="submit"  id="calendar" class="btn btn-info btn-lg" value='See the Calendar'>
-</form>
-</div>
-
-
+{% block content %}{% endblock %}
 <div id = 'space2'>
 {%if logged%}
 <form id = 'login' action="/log_out/">
@@ -50,8 +29,11 @@
 </form>
 {%endif%}
 </div>
+{%if not_home%}
+<form id = 'login' action="/">
+<input type="submit"  id="homebut" class="btn btn-info btn-lg" value='Home'>
+</form>
+{%else%}
 {%if logged%}
 <div id = 'welc'>Welcome, {{student.firstname}}!</div>
-{%endif%}
-
-</html>
+{%endif%}{%endif%}

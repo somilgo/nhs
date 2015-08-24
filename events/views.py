@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from .eventCalendar import EventCalendar
 import datetime
+from django.template import RequestContext
 
 # Create your views here.
 
@@ -22,8 +23,7 @@ def home(request):
 	except:
 		logged = False
 		student = None
-	return render(request, 'events/home.html', {'year': datetime.datetime.now().year,
-	 'month': datetime.datetime.now().month, 'student': student, 'logged':logged})
+	return render(request, 'events/home.html', {'foo':'bar'}, context_instance=RequestContext(request))
 
 
 def sign_up(request):
@@ -99,14 +99,19 @@ def event_details(request, pk):
 	month = event.date.month
 	year = event.date.year
 	return render_to_response('events/event_detail.html', {'object':event, 'full':full, 
-		'signed_up':signed_up, 'month':month, 'year':year, 'my':request.session['myev'], 'officer':student.is_officer})
+		'signed_up':signed_up, 'month':month, 'year':year, 'my':request.session['myev'], 'officer':student.is_officer},
+		context_instance=RequestContext(request))
 
 def calendar(request, year, month):
 	myYear = int(year)
 	myMonth = int(month)
-	events = Event.objects.order_by('date').filter(
+	events = Event.objects.order_by('start_time').filter(
 		date__year=myYear, date__month=myMonth)
-	cal = EventCalendar(events).formatmonth(myYear,myMonth)
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		student = None
+	cal = EventCalendar(events, student).formatmonth(myYear,myMonth)
 	if myMonth == 12:
 		nextMonth = 1
 		nextYear = myYear+1
@@ -135,7 +140,7 @@ def event_sign_up(request, event_pk):
 		if student not in event.current_students.all():
 			event.current_students.add(student)
 			event.save()
-			return HttpResponse("Thanks for signing up!")
+			return HttpResponseRedirect("/{}/".format(event_pk))
 		return HttpResponse("You've already signed up!")
 	else:
 		return HttpResponse("This event is full!")
@@ -149,9 +154,9 @@ def un_sign(request, pk):
 	if student in event.current_students.all():
 		event.current_students.remove(student)
 		event.save()
-		return HttpResponse("You've unsigned up")
+		return HttpResponseRedirect("/{}/".format(pk))
 	else:
-		return HttpResponse("You haven't signed up!")
+		return HttpResponse("You haven't signed up for this event!")
 
 def cur_stud(request,pk):
 	request.session['post_log'] = '/'
@@ -184,9 +189,13 @@ def my_events(request, year, month):
 	except:
 		request.session['post_log'] = '/{0}/{1}/my_events/'.format(myYear, myMonth)
 		return HttpResponseRedirect('/log_in/')
-	events = Event.objects.order_by('date').filter(
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		student = None
+	events = Event.objects.order_by('start_time').filter(
 		date__year=myYear, date__month=myMonth, current_students=student)
-	cal = EventCalendar(events).formatmonth(myYear,myMonth)
+	cal = EventCalendar(events, student).formatmonth(myYear,myMonth)
 	if myMonth == 12:
 		nextMonth = 1
 		nextYear = myYear+1
@@ -238,8 +247,8 @@ def profile(request):
 	except:
 		return HttpResponseRedirect('/log_in/')
 	events = Event.objects.order_by('date').filter(current_students=student)
-	return render(request, 'events/profile.html', {'student': student, 
-		'second':student.is_second_year, 'events':events})
+	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events},
+		context_instance=RequestContext(request))
 
 def update():
 	events = Event.objects.all()

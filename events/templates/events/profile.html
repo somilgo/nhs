@@ -1,11 +1,16 @@
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id = 'shift'>
 <h1>{{ student.firstname }} {{student.lastname}}</h1>
 <p>Email: {{ student.email }}</p>
-
+<b>
 {%if second%}
 <p>Total Points: {{ student.points}}</p>
 {%else%}
 <p>Total Hours: {{ student.hours }}</p>
-{%endif%}
+{%endif%}</b>
 <p>Completed Events<br>
 {%for e in events%}
 {%if e.event_completed%}
@@ -23,4 +28,6 @@
 {%endif%}
 {%endfor%}
 <br><br>
-<a href = '/'>HOME</a>
+
+</div>
+{%endblock%}

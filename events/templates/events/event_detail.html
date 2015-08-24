@@ -1,5 +1,8 @@
-<html>
-<body>
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id='shift'>
 <h1>{{ object.name }}</h1>
 <p>Date: {{ object.date }}</p>
 <p>Start Time: {{ object.start_time }}</p>
@@ -34,7 +37,7 @@
 {%else%}
 <a href='/{{year}}/{{month}}/'>Back</a>
 {%endif%}
-
+</div>
 <script>
 function delFunc() {
     if (confirm("Are you sure you want to delete this event?") == true) 
@@ -43,5 +46,4 @@ function delFunc() {
 	}
 }
 </script>
-</body>
-</html>
+{%endblock%}

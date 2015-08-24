@@ -1,0 +1,74 @@
+
+table
+{
+	width: 99.99%;
+	height: 99.9%;
+	border-collapse: collapse;
+	z-index: -1;
+	overflow: hidden;
+}
+
+
+th.mon, th.tues, th.wed, th.thurs, th.fri, th.sat, th.sun
+{
+   height:5%;
+   border: 1px solid black;
+}
+
+th.month
+{
+	
+	height: 15%;
+
+}
+
+td {
+   border: 1px solid black;
+   text-align: left;
+   vertical-align: top;
+   padding: .5%;
+   width: 14%;
+   height: 14%;
+   overflow: hidden;
+}
+
+th.month
+{
+	font-size: 7vh;
+}
+
+#back
+{
+	position:absolute;
+	z-index: 100;
+	top:7.7%;
+	left:5%;
+}
+
+#forward
+{
+	position:absolute;
+	z-index: 100;
+	top:7.7%;
+	text-align: right;
+	right:5%;
+}
+
+#space
+{
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.homebutton
+{
+	width:30px;
+	height: 30px;
+
+}
+
+a
+{
+	font-color: green;
+}
