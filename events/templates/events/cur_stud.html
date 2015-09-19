@@ -1,12 +1,16 @@
-<table>
+{%load staticfiles%}
+<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" rel="stylesheet" media="screen">
+
+
 
 {%if officer%}
-<table>
-<tr><th>NAME</th><th>EMAIL</th><tr>
-{% for key, values in emailsx.items %}
+<table id="myTable" class="table tablesorter">
+<tr><th><a href = "#">NAME</th><th><a href = "#">EMAIL</th><th><a href = "#">Delete?</th><tr>
+{% for e in emailsx %}
 <tr>
-<td>{{key}}</td>
-<td>{{values}}</td>
+<td>{{e.0}}</td>
+<td>{{e.1}}</td>
+<td><a href = "#" onclick = "delFunc('{{e.0}}', '{{e.2}}')">X</a></td>
 </tr>
 {%endfor%}
 </table>
@@ -18,4 +22,31 @@
 {%endif%}
 </table>
 <br>
+<button id="copy-button" data-clipboard-text="{% for e in emailsx %}{{e.1}},{%endfor%}" title="Click to copy me.">Copy Email List</button>
+    <script src="{% static 'events/ZeroClipboard.js' %}"></script>
+    <script language="JavaScript">
+        new ZeroClipboard( document.getElementById("copy-button") );
+    </script>
+<br><br>
 <a href = '{{back}}'>Back</a>
+<script>
+function delFunc() {
+    if (confirm("Are you sure you want to remove " + arguments[0] + " from the event?") == true) 
+    {   
+    	window.location.href = "/{{eventpk}}/" + arguments[1] + "/unsign/";
+	}
+}
+</script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
+<script src="http://tutsme-webdesign.info/tutorials/tablesorter/jquery.tablesorter.min.js"></script>
+<script>
+	$(document).ready(function(){
+	$(function(){
+	$("#myTable").tablesorter();
+	});
+	});
+</script>
+

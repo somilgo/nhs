@@ -20,4 +20,7 @@ urlpatterns = [
 	url(r'^log_out/$', views.log_out, name='log_out'),
 	url(r'^(?P<year>[0-9]+)/(?P<month>[0-9]+)/my_events/$', views.my_events, name='my_events'),
 	url(r'^profile/$', views.profile, name='profile'),
+	url(r'^(?P<eventpk>[0-9]+)/(?P<studentpk>[0-9]+)/unsign/$', views.remove_student, name='remove_student'),
+	url(r'^students_list/$', views.student_list, name='student_list'),
+	url(r'^students_list/(?P<pk>[0-9]+)/$', views.super_profile, name='super_profile'),
 ]

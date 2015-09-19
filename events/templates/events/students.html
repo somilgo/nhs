@@ -1,0 +1,31 @@
+<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" rel="stylesheet" media="screen">
+
+<table id="myTable" class="table tablesorter">
+<thead>
+<tr><th><a href = "#">First</a></th><th><a href = "#">Last</th><th><a href = "#">Email</th><th><a href = "#">Points</th><th><a href = "#">Hours</th><th><a href = "#">Second Year?</th><th><a href = "#">Events</a></tr></thead>
+{% for s in students%}
+<tr>
+<td>{{s.firstname}}</td>
+<td>{{s.lastname}}</td>
+<td>{{s.email}}</td>
+<td>{%if s.is_second_year%}{{s.points}}{%endif%}</td>
+<td>{%if not s.is_second_year%}{{s.hours}}{%endif%}</td>
+<td>{{s.is_second_year}}</td>
+<td><a href = "/students_list/{{s.pk}}/">View Profile</a></td>
+</tr>
+{%endfor%}
+</table>
+<br><br>
+<a href="/">HOME</a>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.min.js"></script>
+<script src="http://tutsme-webdesign.info/tutorials/tablesorter/jquery.tablesorter.min.js"></script>
+<script>
+	$(document).ready(function(){
+	$(function(){
+	$("#myTable").tablesorter();
+	});
+	});
+</script>

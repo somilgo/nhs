@@ -23,6 +23,7 @@ def home(request):
 	except:
 		logged = False
 		student = None
+	update()
 	return render(request, 'events/home.html', {'foo':'bar'}, context_instance=RequestContext(request))
 
 
@@ -168,13 +169,17 @@ def cur_stud(request,pk):
 		return HttpResponseRedirect('/log_in/')
 	students = event.current_students.all()
 	names = []
-	emails = {}
+	emails = []
 	officer = student.is_officer
 	for s in students:
+		temp = []
 		names.append(s.__unicode__())
-		emails[s.__unicode__()]=s.email
+		temp.append(s.__unicode__())
+		temp.append(s.email)
+		temp.append(s.pk)
+		emails.append(temp)
 	back = '/{}/'.format(pk)
-	return render_to_response('events/cur_stud.html', {'namesx':names, 'emailsx':emails, 'officer':officer, 'back':back})
+	return render_to_response('events/cur_stud.html', {'namesx':names, 'emailsx':emails, 'officer':officer, 'back':back, 'eventpk':pk})
 
 def log_out(request):
 	request.session['user'] = None
@@ -238,7 +243,7 @@ def delete_event(request, pk):
 	except:
 		return HttpResponseRedirect('/log_in/')
 	if not student.is_officer:
-		return HttpResponse("You need to be an officer")
+		return HttpResponse("You need to be an officer to view this page!")
 	Event.objects.get(pk=pk).delete()
 	return HttpResponseRedirect('/')
 def profile(request):
@@ -247,7 +252,48 @@ def profile(request):
 	except:
 		return HttpResponseRedirect('/log_in/')
 	events = Event.objects.order_by('date').filter(current_students=student)
-	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events},
+	supers = False
+	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers},
+		context_instance=RequestContext(request))
+
+def remove_student(request, eventpk, studentpk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	event = Event.objects.get(pk=eventpk)
+	student_to_remove = Student.objects.get(pk=studentpk)
+	if student_to_remove in event.current_students.all():
+		event.current_students.remove(student_to_remove)
+		event.save()
+		return HttpResponseRedirect("/{}/students".format(eventpk))
+	else:
+		return HttpResponse("This student is no longer signed up for this event!")
+
+def student_list(request):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	allStuds = Student.objects.all()
+
+	return render_to_response('events/students.html', {'students':allStuds})
+
+def super_profile(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student = Student.objects.get(pk=pk)
+	events = Event.objects.order_by('date').filter(current_students=student)
+	supers = True
+	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers},
 		context_instance=RequestContext(request))
 
 def update():
