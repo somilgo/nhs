@@ -89,6 +89,11 @@ form
 	display: inline;
 }
 
+select
+{
+	color:black;
+}
+
 #welc
 {
 	position: absolute;
@@ -122,6 +127,7 @@ h1
 	top:50px;
 	left: 10px;
 }
+
 
 #homebut
 {

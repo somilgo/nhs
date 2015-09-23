@@ -1,3 +1,10 @@
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id='shift'>
+
+
 <h1>Edit Event</h1>
 
 <form action='/{{pk}}/edit/' method="post">
@@ -5,3 +12,6 @@
     {{ form.as_p}}
     <input type="submit" value="Edit" />
 </form>
+<br><br>
+</div>
+{%endblock%}

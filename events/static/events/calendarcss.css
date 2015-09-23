@@ -67,6 +67,10 @@ th.month
 	height: 30px;
 
 }
+.homebutton:hover
+{
+	color:blue;
+}
 
 a
 {
