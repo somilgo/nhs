@@ -94,6 +94,11 @@ select
 	color:black;
 }
 
+textarea
+{
+	color: black;
+}
+
 #welc
 {
 	position: absolute;
