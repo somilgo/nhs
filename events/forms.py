@@ -61,9 +61,10 @@ class EventForm(forms.ModelForm):
 	current_students = forms.ModelMultipleChoiceField(queryset=Student.objects.all(),widget=forms.SelectMultiple,required=False)
 	class Meta:
 		model = Event
-		exclude = ['num_students', 'event_completed']
+		exclude = ['num_students', 'event_completed', 'total_points']
 	def clean(self):
 		students = self.cleaned_data['current_students']
+		self.cleaned_data['total_points'] = 0
 		self.cleaned_data['num_students'] = len(students)
 		self.cleaned_data['event_completed'] = False
 		if len(students) > self.cleaned_data['max_students']:

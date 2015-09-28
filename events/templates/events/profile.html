@@ -6,11 +6,14 @@
 <h1>{{ student.firstname }} {{student.lastname}}</h1>
 <p>Email: {{ student.email }}</p>
 <b>
-{%if second%}
-<p>Total Points: {{ student.points}}</p>
-{%else%}
 <p>Total Hours: {{ student.hours }}</p>
-{%endif%}</b>
+<p>Required Hours: {{student.required_hours}}
+{%if supers%}
+<a href = '/min_req/{{student.pk}}'> - </a>
+<a href = '/add_req/{{student.pk}}'> + </a>
+{%endif%}
+</p>
+</b>
 <p>Completed Events<br>
 {%for e in events%}
 {%if e.event_completed%}

@@ -50,10 +50,10 @@ class Student(AbstractBaseUser):
 		default=''
 	)
 	is_officer = models.BooleanField(default=False)
-	is_second_year = models.BooleanField(verbose_name="Check this box if this is your second year in NHS")
+	is_second_year = models.BooleanField(verbose_name="Check this box if you are a SENIOR")
 	hours = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 	points = models.DecimalField(max_digits=3, decimal_places=1, default=0)
-
+	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default = 12)
 	USERNAME_FIELD = 'email'
 
 	def __unicode__(self):
@@ -78,7 +78,7 @@ class Event(models.Model):
 	start_time = models.TimeField()
 	end_time = models.TimeField()
 	total_hours = models.DecimalField(max_digits=4, decimal_places=2)
-	total_points = models.DecimalField(max_digits=3, decimal_places=1)
+	total_points = models.DecimalField(max_digits=3, decimal_places=1, default=0)
 	max_students = models.IntegerField()
 	num_students = models.IntegerField()
 	event_description = models.TextField(default='')

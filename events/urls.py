@@ -23,4 +23,6 @@ urlpatterns = [
 	url(r'^(?P<eventpk>[0-9]+)/(?P<studentpk>[0-9]+)/unsign/$', views.remove_student, name='remove_student'),
 	url(r'^students_list/$', views.student_list, name='student_list'),
 	url(r'^students_list/(?P<pk>[0-9]+)/$', views.super_profile, name='super_profile'),
+	url(r'^add_req/(?P<pk>[0-9]+)/$', views.add_req, name='add_req'),
+	url(r'^min_req/(?P<pk>[0-9]+)/$', views.min_req, name='min_req'),
 ]

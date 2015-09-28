@@ -293,8 +293,31 @@ def super_profile(request, pk):
 	student = Student.objects.get(pk=pk)
 	events = Event.objects.order_by('date').filter(current_students=student)
 	supers = True
-	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers},
-		context_instance=RequestContext(request))
+	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers, 'student':student})
+
+def add_req(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student = Student.objects.get(pk=pk)
+	student.required_hours = student.required_hours + 1
+	student.save()
+	return HttpResponseRedirect('/students_list/' + pk)
+
+def min_req(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student = Student.objects.get(pk=pk)
+	student.required_hours = student.required_hours - 1
+	student.save()
+	return HttpResponseRedirect('/students_list/' + pk)
 
 def update():
 	events = Event.objects.all()
