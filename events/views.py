@@ -59,6 +59,19 @@ def log_in(request):
 			messages.warning(request, "Username or password is incorrect.")
 	return render(request, 'events/log_in.html', {'form':form})
 
+def change_pass(request):
+	form = ChangePass(request.POST or None)
+	if form.is_valid():
+		password = form.cleaned_data['password1']
+		try:
+			student = Student.objects.get(email=request.session['user'])
+		except:
+			return HttpResponseRedirect('/log_in/')
+		student.set_password(password)
+		student.save()
+		return HttpResponseRedirect('/')
+	return render(request, 'events/pass.html', {'form':form})
+
 def log_in_success(request):
 	return HttpResponse("{} has logged in!".format(request.session['user']))
 

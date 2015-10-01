@@ -48,6 +48,18 @@ class LogIn(forms.Form):
 				raise forms.ValidationError("Email and password combination do not match.")
 		return self.cleaned_data
 
+class ChangePass(forms.Form):
+	password1 = forms.CharField(widget=forms.PasswordInput, label="New Password")
+	password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+	def clean(self):
+		password1 = self.cleaned_data.get("password1")
+		password2 = self.cleaned_data.get("password2")
+		if password1 != password2:
+			raise forms.ValidationError("Passwords do not match!")
+		
+		return self.cleaned_data
+
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 

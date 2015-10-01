@@ -51,8 +51,8 @@ class Student(AbstractBaseUser):
 	)
 	is_officer = models.BooleanField(default=False)
 	is_second_year = models.BooleanField(verbose_name="Check this box if you are a SENIOR")
-	hours = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-	points = models.DecimalField(max_digits=3, decimal_places=1, default=0)
+	hours = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+	points = models.DecimalField(max_digits=10, decimal_places=1, default=0)
 	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default = 12)
 	USERNAME_FIELD = 'email'
 
