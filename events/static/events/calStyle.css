@@ -38,8 +38,11 @@ td {
    padding: .5%;
    width: 14%;
    height: 14%;
-
+   max-width: 0;
    word-break: break-all;
+   -webkit-hyphens: auto;
+   -moz-hyphens: auto;
+        hyphens: auto;
 }
 
 th.month

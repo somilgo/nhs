@@ -22,7 +22,7 @@ class EventCalendar(HTMLCalendar):
 				cssclass += ' today'
 			if day in self.events:
 				cssclass += ' filled'
-				body = ['<ul>']
+				body = ['<ul style="padding-left:20px">']
 				for event in self.events[day]:
 					if event in doneevents and event.event_completed:
 						aClass = "green"
@@ -34,9 +34,18 @@ class EventCalendar(HTMLCalendar):
 						aClass = "cyan"
 						if event.num_students >= event.max_students:
 							aClass = 'red'
+					theName = esc(event.name)
+					truncName = ""
+					count = 0
+					for i in theName:
+						count+=1
+						if count == 35:
+							truncName += "..."
+							break
+						truncName += i
 					body.append('<li>')
-					body.append('<a href="%s" style="color:%s">' % (event.get_absolute_url(), aClass))
-					body.append(esc(event.name))
+					body.append('<a href="%s" title = "%s" style="color:%s">' % (event.get_absolute_url(), theName, aClass))
+					body.append(theName)
 					body.append('</a></li>')
 				body.append('</ul>')
 				return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
