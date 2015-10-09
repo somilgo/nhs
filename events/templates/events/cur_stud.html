@@ -22,7 +22,7 @@
 {%endif%}
 </table>
 <br>
-<button id="copy-button" data-clipboard-text="{% for e in emailsx %}{{e.1}},{%endfor%}" title="Click to copy me.">Copy Email List</button>
+{%if officer%}<button id="copy-button" data-clipboard-text="{% for e in emailsx %}{{e.1}},{%endfor%}" title="Click to copy me.">Copy Email List</button>{%endif%}
     <script src="{% static 'events/ZeroClipboard.js' %}"></script>
     <script language="JavaScript">
         new ZeroClipboard( document.getElementById("copy-button") );

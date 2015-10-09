@@ -72,9 +72,6 @@ def change_pass(request):
 		return HttpResponseRedirect('/')
 	return render(request, 'events/pass.html', {'form':form})
 
-def log_in_success(request):
-	return HttpResponse("{} has logged in!".format(request.session['user']))
-
 def event_creator(request):
 	try:
 		student = Student.objects.get(email=request.session['user'])
@@ -306,7 +303,7 @@ def super_profile(request, pk):
 	student = Student.objects.get(pk=pk)
 	events = Event.objects.order_by('date').filter(current_students=student)
 	supers = True
-	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers, 'student':student})
+	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers, 'student':student, 'pk':pk})
 
 def add_req(request, pk):
 	try:
