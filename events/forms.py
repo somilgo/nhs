@@ -70,7 +70,7 @@ class EventForm(forms.ModelForm):
 	date = forms.DateField(widget=DateInput)
 	start_time = forms.TimeField(widget=TimeInput)
 	end_time = forms.TimeField(widget=TimeInput)
-	current_students = forms.ModelMultipleChoiceField(queryset=Student.objects.all(),widget=forms.SelectMultiple,required=False)
+	current_students = forms.ModelMultipleChoiceField(queryset=Student.objects.order_by('lastname'),widget=forms.SelectMultiple,required=False)
 	class Meta:
 		model = Event
 		exclude = ['num_students', 'event_completed', 'total_points']
