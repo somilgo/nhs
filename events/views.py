@@ -116,7 +116,7 @@ def event_details(request, pk):
 def calendar(request, year, month):
 	myYear = int(year)
 	myMonth = int(month)
-	events = Event.objects.order_by('start_time').filter(
+	events = Event.objects.order_by('date').filter(
 		date__year=myYear, date__month=myMonth)
 	try:
 		student = Student.objects.get(email=request.session['user'])
