@@ -247,6 +247,24 @@ def edit_event(request,pk):
 
 	return render(request, 'events/edit.html', {'form': form, 'pk':pk})
 
+def dup_event(request,pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to see this page")
+	event = Event.objects.get(pk=pk)
+	if request.method == 'POST':
+		form = DupEventForm(request.POST, instance=event)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/{}/'.format(pk))
+	else:
+		form = DupEventForm(instance=event)
+
+	return render(request, 'events/duplicate.html', {'form': form, 'pk':pk})
+
 def delete_event(request, pk):
 	try:
 		student = Student.objects.get(email=request.session['user'])
@@ -281,6 +299,17 @@ def remove_student(request, eventpk, studentpk):
 		return HttpResponseRedirect("/{}/students".format(eventpk))
 	else:
 		return HttpResponse("This student is no longer signed up for this event!")
+
+def delete_student(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student_to_delete= Student.objects.get(pk=pk)
+	student_to_delete.delete()
+	return HttpResponseRedirect('/students_list/')
 
 def student_list(request):
 	try:

@@ -1,0 +1,17 @@
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id='shift'>
+
+
+<h1>Duplicate Event</h1>
+
+<form action='/{{pk}}/duplicate/' method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Duplicate" />
+</form>
+<br><br>
+</div>
+{%endblock%}

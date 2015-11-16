@@ -92,6 +92,32 @@ class EventForm(forms.ModelForm):
 		event.save()
 		return event
 
+class DupEventForm(forms.ModelForm):
+	date = forms.DateField(widget=DateInput)
+	start_time = forms.TimeField(widget=TimeInput)
+	end_time = forms.TimeField(widget=TimeInput)
+	current_students = forms.ModelMultipleChoiceField(queryset=Student.objects.order_by('lastname'),widget=forms.SelectMultiple,required=False)
+	class Meta:
+		model = Event
+		exclude = ['num_students', 'event_completed', 'total_points']
+	def clean(self):
+		students = self.cleaned_data['current_students']
+		self.cleaned_data['total_points'] = 0
+		self.cleaned_data['num_students'] = len(students)
+		self.cleaned_data['event_completed'] = False
+		if len(students) > self.cleaned_data['max_students']:
+			raise forms.ValidationError("There are more than the maximum number of students registered. Please increase the maximum or remove some students")
+
+		return self.cleaned_data
+	def save(self, commit=True):
+		event = super(DupEventForm, self).save(commit=False)
+		event.pk = None
+		if commit:
+			event.save()
+		event.current_students = self.cleaned_data['current_students']
+		event.save()
+		return event
+
 
 
 
