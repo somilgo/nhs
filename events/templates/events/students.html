@@ -2,12 +2,13 @@
 
 <table id="myTable" class="table tablesorter">
 <thead>
-<tr><th><a href = "#">First</a></th><th><a href = "#">Last</th><th><a href = "#">Email</th><th><a href = "#">Hours</th><th><a href = "#"> Required Hours</th><th><a href = "#">Grade</th><th><a href = "#">Enough Hours?</th><th><a href = "#">Events</a></tr></thead>
+<tr><th><a href = "#">First</a></th><th><a href = "#">Last</th><th><a href = "#">Email</th><th><a href = "#">Phone</th><th><a href = "#">Hours</th><th><a href = "#"> Required Hours</th><th><a href = "#">Grade</th><th><a href = "#">Enough Hours?</th><th><a href = "#">Events</a></tr></thead>
 {% for s in students%}
 <tr style="background-color:{% if s.hours >= s.required_hours %}#d3ffcf{%else%}#ffcfcf{%endif%}">
 <td>{{s.firstname}}</td>
 <td>{{s.lastname}}</td>
 <td>{{s.email}}</td>
+<td>{% if s.phone == "000-000-0000"%}None{%else%}{{s.phone}}{%endif%}</td>
 
 <td>{{s.hours}}</td>
 <td>{{s.required_hours}}</td>

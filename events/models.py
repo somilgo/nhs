@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 import datetime
+from django.core.validators import RegexValidator
 
 # Create your models here.
 
@@ -54,6 +55,8 @@ class Student(AbstractBaseUser):
 	hours = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 	points = models.DecimalField(max_digits=10, decimal_places=1, default=0)
 	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default = 12)
+	phone_regex = RegexValidator(regex=r'^[1-9]\d{2}-\d{3}-\d{4}$', message="Phone number must be entered in the format: 'XXX-XXX-XXXX'")
+	phone = models.CharField(validators=[phone_regex], verbose_name="Phone Number", max_length=12, default = '000-000-0000')
 	USERNAME_FIELD = 'email'
 
 	def __unicode__(self):

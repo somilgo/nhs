@@ -24,6 +24,9 @@ def home(request):
 		logged = False
 		student = None
 	update()
+	if logged:
+		if student.phone == '000-000-0000':
+			return HttpResponseRedirect('/phone_input/')
 	return render(request, 'events/home.html', {'foo':'bar'}, context_instance=RequestContext(request))
 
 
@@ -71,6 +74,19 @@ def change_pass(request):
 		student.save()
 		return HttpResponseRedirect('/')
 	return render(request, 'events/pass.html', {'form':form})
+
+def change_phone(request):
+	form = PhoneInput(request.POST or None)
+	if form.is_valid():
+		phonenum = form.cleaned_data['phone']
+		try:
+			student = Student.objects.get(email=request.session['user'])
+		except:
+			return HttpResponseRedirect('/log_in/')
+		student.phone = phonenum
+		student.save()
+		return HttpResponseRedirect('/')
+	return render(request, 'events/phone.html', {'form':form})
 
 def event_creator(request):
 	try:
@@ -186,6 +202,7 @@ def cur_stud(request,pk):
 		names.append(s.__unicode__())
 		temp.append(s.__unicode__())
 		temp.append(s.email)
+		temp.append(s.phone)
 		temp.append(s.pk)
 		emails.append(temp)
 	back = '/{}/'.format(pk)

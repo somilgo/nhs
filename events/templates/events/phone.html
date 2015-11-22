@@ -1,0 +1,17 @@
+{% extends "events/base.html" %}
+{% load staticfiles %}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="{% static 'events/detailStyle.css' %}" />
+<div id = 'wrapper'><div id = 'shiftlog'>
+
+<h1>Update Phone Number</h1>
+<br>
+<form action="/phone_input/" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Update" />
+</form><br><br>
+
+
+</div></div>
+{%endblock%}

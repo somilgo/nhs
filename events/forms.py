@@ -1,6 +1,7 @@
 from django import forms
 from events.models import *
 from django.contrib.auth.hashers import check_password
+from django.core.validators import RegexValidator
 
 class RegistrationForm(forms.ModelForm):
 	"""
@@ -59,6 +60,11 @@ class ChangePass(forms.Form):
 		
 		return self.cleaned_data
 
+class PhoneInput(forms.Form):
+	phone_regex = RegexValidator(regex=r'^[1-9]\d{2}-\d{3}-\d{4}$', message="Phone number must be entered in the format: 'XXX-XXX-XXXX'")
+	phone = forms.CharField(validators=[phone_regex], label="Please enter your cell phone number XXX-XXX-XXXX")
+	def clean(self):
+		return self.cleaned_data
 
 class DateInput(forms.DateInput):
     input_type = 'date'

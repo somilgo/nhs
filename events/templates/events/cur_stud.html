@@ -5,12 +5,13 @@
 
 {%if officer%}
 <table id="myTable" class="table tablesorter">
-<tr><th><a href = "#">NAME</th><th><a href = "#">EMAIL</th><th><a href = "#">Delete?</th><tr>
+<tr><th><a href = "#">NAME</th><th><a href = "#">EMAIL</th><th><a href = "#">PHONE</th><th><a href = "#">Delete?</th><tr>
 {% for e in emailsx %}
 <tr>
 <td>{{e.0}}</td>
 <td>{{e.1}}</td>
-<td><a href = "#" onclick = "delFunc('{{e.0}}', '{{e.2}}')">X</a></td>
+<td>{{e.2}}</td>
+<td><a href = "#" onclick = "delFunc('{{e.0}}', '{{e.3}}')">X</a></td>
 </tr>
 {%endfor%}
 </table>
