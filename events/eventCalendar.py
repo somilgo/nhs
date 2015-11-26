@@ -3,6 +3,7 @@ from datetime import date
 from itertools import groupby
 from models import *
 from django.utils.html import conditional_escape as esc
+from quicksort import *
 
 class EventCalendar(HTMLCalendar):
 
@@ -23,6 +24,8 @@ class EventCalendar(HTMLCalendar):
 			if day in self.events:
 				cssclass += ' filled'
 				body = ['<ul style="padding-left:20px">']
+				#self.events[day] = quicksort(self.events[day])
+				self.events[day].sort(key=lambda x: (int(x.start_time.hour) + int(x.start_time.minute)/100.0))
 				for event in self.events[day]:
 					if event in doneevents and event.event_completed:
 						aClass = "green"
