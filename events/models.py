@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
 import datetime
 from django.core.validators import RegexValidator
-
+import string
 # Create your models here.
 
 class StudentManager(BaseUserManager):
@@ -88,6 +88,9 @@ class Event(models.Model):
 	event_completed = models.BooleanField(default=False)
 
 	def save(self):
+		namex = self.name
+		namex = filter(lambda x: x in string.printable, namex)
+		self.name = namex
 		dateTimeEnd = datetime.datetime.combine(self.date, self.end_time)
 		if dateTimeEnd < datetime.datetime.now():
 			self.event_completed=True
