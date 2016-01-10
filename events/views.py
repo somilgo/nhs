@@ -23,7 +23,11 @@ def home(request):
 	except:
 		logged = False
 		student = None
-	update()
+	try:
+		request.session['update']
+	except:
+		update()
+		request.session['update'] = 0
 	if logged:
 		if student.phone == '000-000-0000':
 			return HttpResponseRedirect('/phone_input/')
