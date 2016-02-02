@@ -5,43 +5,7 @@ import datetime
 from django.core.validators import RegexValidator
 import string
 # Create your models here.
-
-class StudentManager(BaseUserManager):
-	def create_user(self, firstname, lastname, email, is_second_year, password, is_officer=False, hours=0, points=0):
-		if not email:
-			raise ValueError("Student must have an email address.")
-
-		newStudent = self.model(
-			email = self.normalize_email(email),
-			firstname=firstname,
-			lastname=lastname,
-			is_officer=is_officer,
-			is_second_year=is_second_year,
-			hours=hours,
-			points=points
-		)
-
-		newStudent.set_password(password)
-		user.save(using=self.db)
-		return newStudent
-	def create_superuser(self, firstname, lastname, email, password, is_second_year, is_officer=True, hours=0, points=0):
-		newSuperStudent = self.create_user(
-			email = self.normalize_email(email),
-			firstname=firstname,
-			lastname=lastname,
-			is_officer=is_officer,
-			is_second_year=is_second_year,
-			hours=hours,
-			points=points,
-			password=password
-		)
-		newSuperStudent.is_admin = True
-		newSuperStudent.save(using=self.db)
-		return newSuperStudent
-
-
 class Student(AbstractBaseUser):
-	objects = StudentManager()
 	firstname = models.CharField(verbose_name="First Name", max_length=30, default="")
 	lastname = models.CharField(verbose_name="Last Name", max_length=30, default="")
 	email = models.EmailField(
