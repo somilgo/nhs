@@ -9,8 +9,8 @@ Phone: {{student.phone }}</p>
 <p><a href = "/pass_change/">Change Password</a></p>
 <p>Outside Hours: {{student.addedHours}}
 {%if supers%}
-<a href = '/add_out/{{student.pk}}'> - </a>
-<a href = '/sub_out/{{student.pk}}'> + </a>
+<a href = '/sub_out/{{student.pk}}'> - </a>
+<a href = '/add_out/{{student.pk}}'> + </a>
 {%endif%}
 <b>
 <p>Total Hours: {{ student.hours }}</p>
