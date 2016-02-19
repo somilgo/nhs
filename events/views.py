@@ -12,6 +12,7 @@ from django.utils.safestring import mark_safe
 from .eventCalendar import EventCalendar
 import datetime
 from django.template import RequestContext
+import decimal
 
 # Create your views here.
 
@@ -363,7 +364,7 @@ def add_req(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.required_hours = student.required_hours + .5
+	student.required_hours = student.required_hours + decimal.Decimal(.5)
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
@@ -375,7 +376,7 @@ def min_req(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.required_hours = student.required_hours - .5
+	student.required_hours = student.required_hours - decimal.Decimal(.5)
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
@@ -387,7 +388,7 @@ def add_out(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.addedHours = student.addedHours + .5
+	student.addedHours = student.addedHours + decimal.Decimal(.5)
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
@@ -399,7 +400,7 @@ def sub_out(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.addedHours = student.addedHours - .5
+	student.addedHours = student.addedHours - decimal.Decimal(.5)
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 

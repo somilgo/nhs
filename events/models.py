@@ -4,6 +4,7 @@ from django.utils import timezone
 import datetime
 from django.core.validators import RegexValidator
 import string
+
 # Create your models here.
 class Student(AbstractBaseUser):
 	firstname = models.CharField(verbose_name="First Name", max_length=30, default="")
