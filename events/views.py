@@ -363,7 +363,7 @@ def add_req(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.required_hours = student.required_hours + 1
+	student.required_hours = student.required_hours + .5
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
@@ -375,7 +375,31 @@ def min_req(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
-	student.required_hours = student.required_hours - 1
+	student.required_hours = student.required_hours - .5
+	student.save()
+	return HttpResponseRedirect('/students_list/' + pk)
+
+def add_out(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student = Student.objects.get(pk=pk)
+	student.addedHours = student.addedHours + .5
+	student.save()
+	return HttpResponseRedirect('/students_list/' + pk)
+
+def sub_out(request, pk):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+	student = Student.objects.get(pk=pk)
+	student.addedHours = student.addedHours - .5
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 

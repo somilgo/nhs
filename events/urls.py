@@ -28,4 +28,6 @@ urlpatterns = [
 	url(r'^students_list/(?P<pk>[0-9]+)/$', views.super_profile, name='super_profile'),
 	url(r'^add_req/(?P<pk>[0-9]+)/$', views.add_req, name='add_req'),
 	url(r'^min_req/(?P<pk>[0-9]+)/$', views.min_req, name='min_req'),
+	url(r'^add_out/(?P<pk>[0-9]+)/$', views.add_out, name='add_out'),
+	url(r'^sub_out/(?P<pk>[0-9]+)/$', views.sub_out, name='sub_out'),
 ]

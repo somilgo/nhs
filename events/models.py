@@ -21,6 +21,7 @@ class Student(AbstractBaseUser):
 	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default = 12)
 	phone_regex = RegexValidator(regex=r'^[1-9]\d{2}-\d{3}-\d{4}$', message="Phone number must be entered in the format: 'XXX-XXX-XXXX'")
 	phone = models.CharField(validators=[phone_regex], verbose_name="Phone Number", max_length=12, default = '000-000-0000')
+	addedHours = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 	USERNAME_FIELD = 'email'
 
 	def __unicode__(self):
@@ -33,7 +34,7 @@ class Student(AbstractBaseUser):
 			if i.event_completed:
 				hourz+=i.total_hours
 				pointz+=i.total_points
-		self.hours = hourz
+		self.hours = hourz + self.addedHours
 		self.points = pointz
 		super(Student, self).save()
 
