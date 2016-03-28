@@ -75,6 +75,10 @@ def change_pass(request):
 			student = Student.objects.get(email=request.session['user'])
 		except:
 			return HttpResponseRedirect('/log_in/')
+		try:
+			student = Student.objects.get(email=request.session['prof'])
+		except:
+			return HttpResponseRedirect('/')
 		student.set_password(password)
 		student.save()
 		return HttpResponseRedirect('/')
@@ -299,6 +303,7 @@ def delete_event(request, pk):
 def profile(request):
 	try:
 		student = Student.objects.get(email=request.session['user'])
+		request.session['prof'] = request.session['user']
 	except:
 		return HttpResponseRedirect('/log_in/')
 	events = Event.objects.order_by('date').filter(current_students=student)
@@ -352,6 +357,7 @@ def super_profile(request, pk):
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
 	student = Student.objects.get(pk=pk)
+	request.session['prof'] = student.email
 	events = Event.objects.order_by('date').filter(current_students=student)
 	supers = True
 	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers, 'student':student, 'pk':pk})
