@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import dj_database_url
 from django.conf import settings
 
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
