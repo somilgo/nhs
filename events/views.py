@@ -218,7 +218,7 @@ def cur_stud(request,pk):
 	return render_to_response('events/cur_stud.html', {'namesx':names, 'emailsx':emails, 'officer':officer, 'back':back, 'eventpk':pk})
 
 def log_out(request):
-	request.session['user'] = None
+	request.session.flush()
 	return HttpResponseRedirect('/')
 
 def my_events(request, year, month):
