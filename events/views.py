@@ -421,7 +421,17 @@ def sub_out(request, pk):
 
 def outputEvents(request):
 	events = Event.objects.order_by('date')
-	return render(request, 'events/output.html', {'events':events})
+	eventdet = []
+	for e in events:
+		eventunit = ""
+		eventunit+=str(e.date) + ","
+		eventunit+=str(e.start_time) + ","
+		eventunit+=str(e.name) + ","
+		for s in e.current_students.all():
+			eventunit+=str(s) + " || "
+		eventdet.append(eventunit[0:len(eventunit)-4])
+
+	return render(request, 'events/output.html', {'events':eventdet})
 
 def update():
 	events = Event.objects.all()
