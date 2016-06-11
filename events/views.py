@@ -428,8 +428,8 @@ def outputEvents(request):
 		eventunit+=str(e.start_time) + ","
 		eventunit+=str(e.name) + ","
 		for s in e.current_students.all():
-			eventunit+=str(s) + " || "
-		eventdet.append(eventunit[0:len(eventunit)-4])
+			eventunit+=str(s) + ","
+		eventdet.append(eventunit)
 
 	return render(request, 'events/output.html', {'events':eventdet})
 
