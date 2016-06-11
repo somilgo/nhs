@@ -15,8 +15,15 @@ from django.template import RequestContext
 import decimal
 
 # Create your views here.
-
+import random
+random.seed()
 def home(request):
+	if random.randint(1,200)==100:
+		from django.contrib.sessions.models import Session
+		current = request.session.session_key
+		allsess = Session.objects.exclude(session_key=current)
+		allsess.delete()
+
 	request.session['post_log'] = '/'
 	try:
 		student = Student.objects.get(email=request.session['user'])

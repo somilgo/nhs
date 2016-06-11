@@ -16,6 +16,7 @@ class EventCalendar(HTMLCalendar):
 		try:
 			doneevents = Event.objects.order_by('date').filter(current_students=self.student)
 		except:
+			print "error"
 			doneevents = []
 		if day != 0:
 			cssclass = self.cssclasses[weekday]
