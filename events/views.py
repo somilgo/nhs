@@ -21,7 +21,7 @@ def home(request):
 	from django.contrib.sessions.models import Session
 	current = request.session.session_key
 	allsess = Session.objects.exclude(session_key=current)
-	print len(allsess)
+	print "There are currently {} sessions".format(len(allsess))
 	if len(allsess) > 1000:
 		allsess.delete()
 
