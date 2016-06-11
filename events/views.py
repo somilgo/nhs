@@ -18,10 +18,11 @@ import decimal
 import random
 random.seed()
 def home(request):
-	if random.randint(1,200)==100:
-		from django.contrib.sessions.models import Session
-		current = request.session.session_key
-		allsess = Session.objects.exclude(session_key=current)
+	from django.contrib.sessions.models import Session
+	current = request.session.session_key
+	allsess = Session.objects.exclude(session_key=current)
+	print len(allsess)
+	if len(allsess) > 1000:
 		allsess.delete()
 
 	request.session['post_log'] = '/'
@@ -341,8 +342,9 @@ def delete_student(request, pk):
 		return HttpResponseRedirect('/log_in/')
 	if not student.is_officer:
 		return HttpResponse("You need to be an officer to view this page!")
-	student_to_delete= Student.objects.get(pk=pk)
+	student_to_delete = Student.objects.get(pk=pk)
 	student_to_delete.delete()
+	update()
 	return HttpResponseRedirect('/students_list/')
 
 def student_list(request):
