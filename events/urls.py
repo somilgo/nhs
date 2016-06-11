@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^sign_up/$', views.sign_up, name='sign_up'),
 	url(r'^sign_up_success/$', views.sign_up_success, name='sign_up_success'),
 	url(r'^log_in/$', views.log_in, name='log_in'),
+	url(r'^output/$', views.outputEvents, name='output'),
 	url(r'^pass_change/$', views.change_pass, name='pass'),
 	url(r'^phone_input/$', views.change_phone, name='phone'),
 	url(r'^event_creator/$', views.event_creator, name='event_creator'),

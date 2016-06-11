@@ -419,6 +419,10 @@ def sub_out(request, pk):
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
+def outputEvents(request):
+	events = Event.objects.order_by('date')
+	return render(request, 'events/output.html', {'events':events})
+
 def update():
 	events = Event.objects.all()
 	students = Student.objects.all()

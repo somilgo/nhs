@@ -1,0 +1,5 @@
+{%for e in events%}
+{{e.date}}, {{e.start_time}}, {{e.name}},
+{%for s in events.current_students%}
+{{s}} || 
+{%endfor%}{%endfor%}
