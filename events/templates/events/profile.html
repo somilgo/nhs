@@ -5,7 +5,8 @@
 <div id = 'shift'>
 <h1>{{ student.firstname }} {{student.lastname}}</h1>
 <p>Email: {{ student.email }}<br>
-Phone: {{student.phone }}</p>
+Phone: {{student.phone }}<br>
+Membership Status: {% if student.is_second_year %}Second Year Member{%else%}First Year Member{%endif%}</p>
 <p><a href = "/pass_change/">Change Password</a></p>
 <p>Outside Hours: {{student.addedHours}}
 {%if supers%}
