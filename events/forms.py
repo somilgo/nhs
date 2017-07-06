@@ -29,6 +29,11 @@ class RegistrationForm(forms.ModelForm):
 	def save(self, commit=True):
 		user = super(RegistrationForm, self).save(commit=False)
 		user.set_password(self.cleaned_data['password1'])
+		if user.is_second_year:
+			user.required_hours = 12
+		else:
+			user.required_hours = 16
+		user.save()
 		if commit:
 			user.save()
 		return user
