@@ -430,13 +430,14 @@ def outputEvents(request):
 		return HttpResponse("You need to be an officer to view this page!")
 
 	response = HttpResponse(content_type='text/csv')
-	response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+	date = datetime.datetime.today().strftime('%Y-%m-%d')
+	response['Content-Disposition'] = 'attachment; filename="events_{}.csv"'.format(str(date))
 
 	writer = csv.writer(response)
 
 	events = Event.objects.order_by('date')
-	eventunit = []
 	for e in events:
+		eventunit = []
 		eventunit.append(str(e.date))
 		eventunit.append(str(e.start_time))
 		eventunit.append(str(e.name))
