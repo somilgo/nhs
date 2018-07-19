@@ -419,19 +419,31 @@ def sub_out(request, pk):
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
+import csv
 def outputEvents(request):
+	try:
+		student = Student.objects.get(email=request.session['user'])
+	except:
+		return HttpResponseRedirect('/log_in/')
+	if not student.is_officer:
+		return HttpResponse("You need to be an officer to view this page!")
+
+	response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+
+    writer = csv.writer(response)
+
 	events = Event.objects.order_by('date')
 	eventdet = []
 	for e in events:
-		eventunit = ""
-		eventunit+=str(e.date) + ","
-		eventunit+=str(e.start_time) + ","
-		eventunit+=str(e.name) + ","
+		eventunit.append(str(e.date))
+		eventunit.append(str(e.start_time))
+		eventunit.append(str(e.name))
 		for s in e.current_students.all():
-			eventunit+=str(s) + ","
-		eventdet.append(eventunit)
+			eventunit.append(str(s))
+		writer.writerow(eventunit)
 
-	return render(request, 'events/output.html', {'events':eventdet})
+	return response
 
 def update():
 	events = Event.objects.all()
