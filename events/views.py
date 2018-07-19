@@ -435,7 +435,7 @@ def outputEvents(request):
 	writer = csv.writer(response)
 
 	events = Event.objects.order_by('date')
-	eventdet = []
+	eventunit = []
 	for e in events:
 		eventunit.append(str(e.date))
 		eventunit.append(str(e.start_time))
