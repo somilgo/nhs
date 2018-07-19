@@ -429,9 +429,9 @@ def outputEvents(request):
 		return HttpResponse("You need to be an officer to view this page!")
 
 	response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+	response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
 
-    writer = csv.writer(response)
+	writer = csv.writer(response)
 
 	events = Event.objects.order_by('date')
 	eventdet = []
