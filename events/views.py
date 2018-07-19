@@ -13,6 +13,7 @@ from .eventCalendar import EventCalendar
 import datetime
 from django.template import RequestContext
 import decimal
+import csv
 
 # Create your views here.
 import random
@@ -419,7 +420,7 @@ def sub_out(request, pk):
 	student.save()
 	return HttpResponseRedirect('/students_list/' + pk)
 
-import csv
+
 def outputEvents(request):
 	try:
 		student = Student.objects.get(email=request.session['user'])
