@@ -12,7 +12,7 @@
 
 <td>{{s.hours}}</td>
 <td>{{s.required_hours}}</td>
-<td>{% if s.is_second_year %}12{%else%}11{%endif%}</td>
+<td>{% if s.is_senior %}12{%else%}11{%endif%}</td>
 <td>{% if s.hours >= s.required_hours %}True{%else%}False{%endif%}</td>
 <td><a href = "/students_list/{{s.pk}}/">View Profile</a></td>
 <td><a href = '#' onclick="delFunc({{s.pk}})">DELETE</a></td>
