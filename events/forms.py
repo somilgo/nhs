@@ -16,7 +16,7 @@ class RegistrationForm(forms.ModelForm):
 								label="Password (again)")
 	class Meta:
 		model = Student
-		fields = ('firstname', 'lastname', 'email', 'password1', 'password2', 'is_second_year'. 'is_senior')
+		fields = ('firstname', 'lastname', 'email', 'password1', 'password2', 'is_second_year', 'is_senior')
 
 	def clean(self):
 		# Check that the two password entries match
