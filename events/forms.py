@@ -16,17 +16,21 @@ class RegistrationForm(forms.ModelForm):
 								label="Password (again)")
 	class Meta:
 		model = Student
-		fields = ('firstname', 'lastname', 'email', 'password1', 'password2', 'is_second_year')
+		fields = ('firstname', 'lastname', 'email', 'password1', 'password2', 'is_second_year'. 'is_senior')
 
 	def clean(self):
 		# Check that the two password entries match
 		password1 = self.cleaned_data.get("password1")
 		password2 = self.cleaned_data.get("password2")
+		is_second_year = self.cleaned_data.get('is_second_year')
+		is_senior = self.cleaned_data.get('is_senior')
 		email = self.cleaned_data.get("email")
 		if password1 and password2 and password1 != password2:
 			raise forms.ValidationError("Passwords don't match")
 		if Student.objects.filter(email=email).exists():
 			raise forms.ValidationError("This email has already been registered")
+		if is_second_year and not is_senior:
+			raise form.ValidationError("Juniors cannot be second year members")
 		return self.cleaned_data
 
 	def save(self, commit=True):
