@@ -30,7 +30,7 @@ class RegistrationForm(forms.ModelForm):
 		if Student.objects.filter(email=email).exists():
 			raise forms.ValidationError("This email has already been registered")
 		if is_second_year and not is_senior:
-			raise form.ValidationError("Juniors cannot be second year members")
+			raise forms.ValidationError("Juniors cannot be second year members")
 		return self.cleaned_data
 
 	def save(self, commit=True):
