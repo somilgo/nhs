@@ -6,7 +6,7 @@
 <h1>{{ student.firstname }} {{student.lastname}}</h1>
 <p>Email: {{ student.email }}<br>
 Phone: {{student.phone }}<br>
-Grade: {% if s.is_senior %}12{%else%}11{%endif%} <br>
+Grade: {% if student.is_senior %}12{%else%}11{%endif%} <br>
 Membership Status: {% if student.is_second_year %}Second Year Member{%else%}First Year Member{%endif%}</p>
 <p><a href = "/pass_change/">Change Password</a></p>
 <p>Outside Hours: {{student.addedHours}}
