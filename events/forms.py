@@ -13,7 +13,7 @@ class RegistrationForm(forms.ModelForm):
 								label="Password (again)")
 	YEAR_OPTIONS=[("Junior", "Junior"), ("Senior", "Senior")]
 
-	year = forms.ChoiceField(choices=YEAR_OPTIONS, widget=forms.RadioSelect, label="Grade Year")
+	year = forms.ChoiceField(choices=YEAR_OPTIONS, widget=forms.ChoiceField, label="Grade Year", required=True)
 
 	class Meta:
 		model = Student
