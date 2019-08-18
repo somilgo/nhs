@@ -5,8 +5,10 @@ import datetime
 from django.core.validators import RegexValidator
 import string
 
+
 # Create your models here.
 class Student(AbstractBaseUser):
+	REQURIED_HOURS = 20
 	firstname = models.CharField(verbose_name="First Name", max_length=30, default="")
 	lastname = models.CharField(verbose_name="Last Name", max_length=30, default="")
 	email = models.EmailField(
@@ -16,11 +18,10 @@ class Student(AbstractBaseUser):
 		default=''
 	)
 	is_officer = models.BooleanField(default=False)
-	is_second_year = models.BooleanField(verbose_name="Check this box if this is your SECOND YEAR in NHS")
-	is_senior = models.BooleanField(default=False, verbose_name="Check this box if you are a SENIOR (Grade 12)")
+	year = models.CharField(choices=[("Junior", "Junior"), ("Senior", "Senior")], max_length=6 )
 	hours = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 	points = models.DecimalField(max_digits=10, decimal_places=1, default=0)
-	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default = 12)
+	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default=REQURIED_HOURS)
 	phone_regex = RegexValidator(regex=r'^[1-9]\d{2}-\d{3}-\d{4}$', message="Phone number must be entered in the format: 'XXX-XXX-XXXX'")
 	phone = models.CharField(validators=[phone_regex], verbose_name="Phone Number", max_length=12, default = '000-000-0000')
 	addedHours = models.DecimalField(max_digits=10, decimal_places=2, default=0)

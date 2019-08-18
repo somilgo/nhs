@@ -3,9 +3,6 @@ from events.models import *
 from django.contrib.auth.hashers import check_password
 from django.core.validators import RegexValidator
 
-SECOND_REQUIRED_HOURS = 16
-FIRST_REQUIRED_HOURS = 20
-
 class RegistrationForm(forms.ModelForm):
 	"""
 	Form for registering a new account.
@@ -36,10 +33,6 @@ class RegistrationForm(forms.ModelForm):
 	def save(self, commit=True):
 		user = super(RegistrationForm, self).save(commit=False)
 		user.set_password(self.cleaned_data['password1'])
-		if user.is_second_year:
-			user.required_hours = SECOND_REQUIRED_HOURS
-		else:
-			user.required_hours = FIRST_REQUIRED_HOURS
 		user.save()
 		if commit:
 			user.save()
