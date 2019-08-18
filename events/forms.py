@@ -11,6 +11,10 @@ class RegistrationForm(forms.ModelForm):
 								label="Password")
 	password2 = forms.CharField(widget=forms.PasswordInput,
 								label="Password (again)")
+	YEAR_OPTIONS=[("Junior", "Junior"), ("Senior", "Senior")]
+
+	year = forms.ChoiceField(choices=YEAR_OPTIONS, widget=forms.RadioSelect, label="Grade Year")
+
 	class Meta:
 		model = Student
 		fields = ('firstname', 'lastname', 'email', 'password1', 'password2', 'year')
@@ -29,6 +33,7 @@ class RegistrationForm(forms.ModelForm):
 	def save(self, commit=True):
 		user = super(RegistrationForm, self).save(commit=False)
 		user.set_password(self.cleaned_data['password1'])
+		user.year = self.cleaned_data['year']
 		user.save()
 		if commit:
 			user.save()
