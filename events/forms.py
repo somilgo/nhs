@@ -11,7 +11,7 @@ class RegistrationForm(forms.ModelForm):
 								label="Password")
 	password2 = forms.CharField(widget=forms.PasswordInput,
 								label="Password (again)")
-	YEAR_OPTIONS=[("Choose your year", "Choose your year"), ("Junior", "Junior"), ("Senior", "Senior")]
+	YEAR_OPTIONS=[("------", "------"), ("Junior", "Junior"), ("Senior", "Senior")]
 
 	year = forms.ChoiceField(choices=YEAR_OPTIONS, label="Grade Year", required=True)
 
