@@ -2,7 +2,7 @@
 
 <table id="myTable" class="table tablesorter">
 <thead>
-<tr><th><a href = "#">First</a></th><th><a href = "#">Last</th><th><a href = "#">Email</th><th><a href = "#">Phone</th><th><a href = "#">Hours</th><th><a href = "#"> Required Hours</th><th><a href = "#"> Second Year?</th><th><a href = "#">Grade</th><th><a href = "#">Enough Hours?</th><th><a href = "#">Events</a></tr></thead>
+<tr><th><a href = "#">First</a></th><th><a href = "#">Last</th><th><a href = "#">Email</th><th><a href = "#">Phone</th><th><a href = "#">Hours</th><th><a href = "#"> Required Hours</th><th><a href = "#">Grade</th><th><a href = "#">Enough Hours?</th><th><a href = "#">Events</a></tr></thead>
 {% for s in students%}
 <tr style="background-color:{% if s.hours >= s.required_hours %}#d3ffcf{%else%}#ffcfcf{%endif%}">
 <td>{{s.firstname}}</td>
@@ -12,8 +12,7 @@
 
 <td>{{s.hours}}</td>
 <td>{{s.required_hours}}</td>
-<td>{% if s.is_second_year %}Yes{%else%}No{%endif%}</td>
-<td>{% if s.is_senior %}12{%else%}11{%endif%}</td>
+<td>{{s.year}}</td>
 <td>{% if s.hours >= s.required_hours %}Yes{%else%}No{%endif%}</td>
 <td><a href = "/students_list/{{s.pk}}/">View Profile</a></td>
 <td><a href = '#' onclick="delFunc({{s.pk}})">DELETE</a></td>

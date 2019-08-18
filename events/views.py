@@ -317,7 +317,7 @@ def profile(request):
 		return HttpResponseRedirect('/log_in/')
 	events = Event.objects.order_by('date').filter(current_students=student)
 	supers = False
-	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers},
+	return render(request, 'events/profile.html', {'events':events, 'supers':supers},
 		context_instance=RequestContext(request))
 
 def remove_student(request, eventpk, studentpk):
@@ -370,7 +370,7 @@ def super_profile(request, pk):
 	request.session['prof'] = student.email
 	events = Event.objects.order_by('date').filter(current_students=student)
 	supers = True
-	return render(request, 'events/profile.html', {'second':student.is_second_year, 'events':events, 'supers':supers, 'student':student, 'pk':pk})
+	return render(request, 'events/profile.html', { 'events':events, 'supers':supers, 'student':student, 'pk':pk})
 
 def add_req(request, pk):
 	try:
