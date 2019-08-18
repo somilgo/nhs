@@ -18,7 +18,7 @@ class Student(AbstractBaseUser):
 		default=''
 	)
 	is_officer = models.BooleanField(default=False)
-	year = models.CharField(choices=[("Junior", "Junior"), ("Senior", "Senior")], max_length=6 )
+	year = models.CharField(choices=[("Junior", "Junior"), ("Senior", "Senior")], max_length=6, default="Junior")
 	hours = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 	points = models.DecimalField(max_digits=10, decimal_places=1, default=0)
 	required_hours = models.DecimalField(max_digits=3, decimal_places=1, default=REQURIED_HOURS)
