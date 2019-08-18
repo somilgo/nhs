@@ -11,7 +11,7 @@ class RegistrationForm(forms.ModelForm):
 								label="Password")
 	password2 = forms.CharField(widget=forms.PasswordInput,
 								label="Password (again)")
-	YEAR_OPTIONS=[("Junior", "Junior"), ("Senior", "Senior")]
+	YEAR_OPTIONS=[("Choose your year", "Choose your year"), ("Junior", "Junior"), ("Senior", "Senior")]
 
 	year = forms.ChoiceField(choices=YEAR_OPTIONS, label="Grade Year", required=True)
 
@@ -24,6 +24,8 @@ class RegistrationForm(forms.ModelForm):
 		password1 = self.cleaned_data.get("password1")
 		password2 = self.cleaned_data.get("password2")
 		email = self.cleaned_data.get("email")
+		if self.cleaned_data.get('year') != "Junior" and self.cleaned_data.get('year') != "Senior":
+			raise forms.ValidationError("Please choose your grade year!")
 		if password1 and password2 and password1 != password2:
 			raise forms.ValidationError("Passwords don't match")
 		if Student.objects.filter(email=email).exists():
