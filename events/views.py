@@ -14,6 +14,7 @@ import datetime
 from django.template import RequestContext
 import decimal
 import csv
+from django.contrib.auth.models import User
 
 # Create your views here.
 import random
@@ -22,6 +23,11 @@ random.seed()
 def reset(request):
 	from django.core.management import call_command
 	call_command('flush', interactive=False)
+	u = User(username='westnhs')
+	u.set_password('westnhs')
+	u.is_superuser = True
+	u.is_staff = True
+	u.save()
 	return HttpResponse("The database has been reset")
 
 def home(request):
