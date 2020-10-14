@@ -8,7 +8,7 @@ import string
 
 # Create your models here.
 class Student(AbstractBaseUser):
-	REQURIED_HOURS = 15
+	REQURIED_HOURS = os.environ.get("REQUIRED_HOURS")
 	firstname = models.CharField(verbose_name="First Name", max_length=30, default="")
 	lastname = models.CharField(verbose_name="Last Name", max_length=30, default="")
 	email = models.EmailField(

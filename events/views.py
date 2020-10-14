@@ -15,6 +15,7 @@ from django.template import RequestContext
 import decimal
 import csv
 from django.contrib.auth.models import User
+import os
 
 # Create your views here.
 import random
@@ -23,8 +24,9 @@ random.seed()
 def reset(request):
 	from django.core.management import call_command
 	call_command('flush', interactive=False)
-	u = User(username='westnhs')
-	u.set_password('westnhs')
+	username = os.environ.get("SUPERNAME")
+	u = User(username=username)
+	u.set_password(username)
 	u.is_superuser = True
 	u.is_staff = True
 	u.save()
