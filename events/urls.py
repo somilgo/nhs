@@ -31,4 +31,5 @@ urlpatterns = [
 	url(r'^min_req/(?P<pk>[0-9]+)/$', views.min_req, name='min_req'),
 	url(r'^add_out/(?P<pk>[0-9]+)/$', views.add_out, name='add_out'),
 	url(r'^sub_out/(?P<pk>[0-9]+)/$', views.sub_out, name='sub_out'),
+	url(r'^reset/$', views.reset, name='reset'),
 ]

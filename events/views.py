@@ -18,6 +18,12 @@ import csv
 # Create your views here.
 import random
 random.seed()
+
+def reset(request):
+	from django.core.management import call_command
+	call_command('flush', interactive=False)
+	return HttpResponse("The database has been reset")
+
 def home(request):
 	from django.contrib.sessions.models import Session
 	current = request.session.session_key
