@@ -2,6 +2,6 @@ dj-database-url==0.3.0
 dj-static==0.0.6
 Django==1.8.3
 gunicorn==19.3.0
-psycopg2==2.4.5
+psycopg2==2.7.5
 static==0.4
 wsgiref==0.1.2
